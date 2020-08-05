@@ -1,0 +1,8 @@
+version: "2"
+services:
+  app:
+    image: golang:1.14.6-alpine
+    volumes:
+        - .:/go/src/calcpi
+    working_dir: /go/src/calcpi
+    command: go run main.go    
