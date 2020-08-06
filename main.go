@@ -2,57 +2,21 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 func main() {
-	/*
-		demolist := [7]int{1, 6, 9, 9, 10, 1, 10}
-		pilist := make([]int, 0, 6)
 
-		fmt.Println("pilist", pilist)
-
-		helddigits := 0
-
-		for i, q := range demolist {
-			fmt.Println(q)
-
-			if q == 9 {
-				helddigits++
-			} else if q == 10 {
-				q = 0
-				for k := 1; k <= helddigits; k++ {
-					replaced := pilist[i-k]
-					fmt.Println("replaced", replaced)
-					if replaced == 9 {
-						replaced = 0
-					} else {
-						replaced++
-					}
-					pilist[i-k] = replaced
-					fmt.Println("pilist i k", pilist)
-				}
-				helddigits = 1
-			} else {
-				helddigits = 1
-			}
-			pilist = append(pilist, q)
-
-		}
-
-		fmt.Println(pilist)
-		os.Exit(1)*/
-
-	n := 15
+	n := 10001
 	count := n * 10 / 3
 	helddigits := 0
-	pilist := make([]int, 0, count)
+	pilist := make([]string, 0, count)
 	volume := make([]int, count, count)
 	// заполняем двойками
 	for i := 0; i < len(volume); i++ {
 		volume[i] = 2
 	}
-
-	//unconfirmeFigure := 0
 
 	for i := 0; i < n; i++ {
 		carryover := 0
@@ -77,10 +41,16 @@ func main() {
 			for k := 1; k <= helddigits; k++ {
 				replaced := pilist[i-k]
 				fmt.Println("replaced", replaced)
-				if replaced == 9 {
-					replaced = 0
+
+				if replaced == "9" {
+					replaced = strconv.Itoa(0)
 				} else {
-					replaced++
+					replacedint, err := strconv.Atoi(replaced)
+					if err != nil {
+						panic(err)
+					}
+					replacedint++
+					replaced = strconv.Itoa(replacedint)
 				}
 				pilist[i-k] = replaced
 				fmt.Println("pilist i k", pilist)
@@ -89,9 +59,18 @@ func main() {
 		} else {
 			helddigits = 1
 		}
-		pilist = append(pilist, q)
+		pilist = append(pilist, strconv.Itoa(q))
 
 	}
 	fmt.Println(volume)
 	fmt.Println("pilist", pilist)
+	result := pilist[0] + "," + strings.Join(pilist[1:], "")
+	fmt.Println(result)
+
+	for i := 0; i < 1000; i++ {
+		start := i*10 + 1
+		end := start + 10
+		fmt.Println(strings.Join(pilist[start:end], ""))
+	}
+
 }
