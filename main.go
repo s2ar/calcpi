@@ -1,14 +1,14 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"strconv"
 	"strings"
 )
 
-func main() {
+func CaclPi(n int) (string, error) {
 
-	n := 10001
 	count := n * 10 / 3
 	helddigits := 0
 	pilist := make([]string, 0, count)
@@ -31,7 +31,6 @@ func main() {
 		}
 		volume[0] = sum % 10
 		q := int(sum / 10) // новая цифра числа Пи
-		fmt.Println("q ", q)
 
 		// регулировка недействительных цифр
 		if q == 9 {
@@ -40,37 +39,49 @@ func main() {
 			q = 0
 			for k := 1; k <= helddigits; k++ {
 				replaced := pilist[i-k]
-				fmt.Println("replaced", replaced)
 
 				if replaced == "9" {
 					replaced = strconv.Itoa(0)
 				} else {
 					replacedint, err := strconv.Atoi(replaced)
 					if err != nil {
-						panic(err)
+						return "", err
 					}
 					replacedint++
 					replaced = strconv.Itoa(replacedint)
 				}
 				pilist[i-k] = replaced
-				fmt.Println("pilist i k", pilist)
 			}
 			helddigits = 1
 		} else {
 			helddigits = 1
 		}
 		pilist = append(pilist, strconv.Itoa(q))
-
 	}
-	fmt.Println(volume)
-	fmt.Println("pilist", pilist)
+
 	result := pilist[0] + "," + strings.Join(pilist[1:], "")
-	fmt.Println(result)
+	return result, nil
 
-	for i := 0; i < 1000; i++ {
-		start := i*10 + 1
-		end := start + 10
-		fmt.Println(strings.Join(pilist[start:end], ""))
+}
+
+func main() {
+
+	var n int
+	flag.IntVar(&n, "n", 3, "выводимое количество цифр числа Pi")
+	flag.Parse()
+
+	pi, err := CaclPi(n)
+
+	if err != nil {
+		panic(err)
 	}
+
+	fmt.Println(pi)
+
+	// for i := 0; i < 1000; i++ {
+	// 	start := i*10 + 1
+	// 	end := start + 10
+	// 	fmt.Println(strings.Join(pilist[start:end], ""))
+	// }
 
 }
