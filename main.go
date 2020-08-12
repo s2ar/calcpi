@@ -7,7 +7,12 @@ import (
 	"strings"
 )
 
+// CaclPi находит число Pi до заданой точности
 func CaclPi(n int) (string, error) {
+
+	if n < 2 {
+		return "", fmt.Errorf("number n must be greater than one")
+	}
 
 	count := n * 10 / 3
 	helddigits := 0
@@ -41,6 +46,9 @@ func CaclPi(n int) (string, error) {
 				replaced := pilist[i-k]
 
 				if replaced == "9" {
+					//fmt.Println("Catch!=)")
+					//os.Exit(0)
+
 					replaced = strconv.Itoa(0)
 				} else {
 					replacedint, err := strconv.Atoi(replaced)
@@ -69,6 +77,8 @@ func main() {
 	var n int
 	flag.IntVar(&n, "n", 3, "выводимое количество цифр числа Pi")
 	flag.Parse()
+
+	//n = -1
 
 	pi, err := CaclPi(n)
 
