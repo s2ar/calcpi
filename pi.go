@@ -1,14 +1,13 @@
-package main
+package calcpi
 
 import (
-	"flag"
 	"fmt"
 	"strconv"
 	"strings"
 )
 
-// CaclPi находит число Pi до заданой точности
-func CaclPi(n int) (string, error) {
+// To находит число Pi до заданой точности
+func To(n int) (string, error) {
 
 	if n < 2 {
 		return "", fmt.Errorf("number n must be greater than one")
@@ -46,9 +45,6 @@ func CaclPi(n int) (string, error) {
 				replaced := pilist[i-k]
 
 				if replaced == "9" {
-					//fmt.Println("Catch!=)")
-					//os.Exit(0)
-
 					replaced = strconv.Itoa(0)
 				} else {
 					replacedint, err := strconv.Atoi(replaced)
@@ -69,29 +65,5 @@ func CaclPi(n int) (string, error) {
 
 	result := pilist[0] + "," + strings.Join(pilist[1:], "")
 	return result, nil
-
-}
-
-func main() {
-
-	var n int
-	flag.IntVar(&n, "n", 3, "выводимое количество цифр числа Pi")
-	flag.Parse()
-
-	//n = -1
-
-	pi, err := CaclPi(n)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(pi)
-
-	// for i := 0; i < 1000; i++ {
-	// 	start := i*10 + 1
-	// 	end := start + 10
-	// 	fmt.Println(strings.Join(pilist[start:end], ""))
-	// }
 
 }

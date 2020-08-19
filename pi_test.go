@@ -1,4 +1,4 @@
-package main
+package calcpi
 
 import "testing"
 
@@ -8,7 +8,7 @@ var testCalcpiAnswer = "3,141592653589793238462643383279502884197169399375105820
 var testInputParam = 1
 
 func TestInputParam(t *testing.T) {
-	_, err := CaclPi(testInputParam)
+	_, err := To(testInputParam)
 	if err == nil {
 		t.Error("test for CaclPi Failed: took a bad parameter")
 	}
@@ -16,7 +16,7 @@ func TestInputParam(t *testing.T) {
 
 func TestCalcpi(t *testing.T) {
 
-	pi, err := CaclPi(testCalcpi)
+	pi, err := To(testCalcpi)
 	if err != nil {
 		t.Errorf("test for CaclPi Failed: have error")
 	}

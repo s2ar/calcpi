@@ -1,8 +1,13 @@
-version: "2"
+version: "3"
 services:
   app:
-    image: golang:1.14.6-alpine
-    volumes:
-        - .:/go/src/calcpi
-    working_dir: /go/src/calcpi
-    command: go run main.go    
+    # Configuration for building the docker image for the service
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+
+    # image: golang:1.14.6-alpine
+    # volumes:
+    #     - .:/go/src/calcpi
+    # working_dir: /go/src/calcpi
+    # command: go run main.go    
